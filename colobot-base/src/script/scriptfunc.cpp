@@ -3439,6 +3439,10 @@ private:
 };
 
 
+void CScriptFunctions::Cancel (void* user) {
+	CScript*    script = static_cast<CScript*>(user);
+	script->m_taskExecutor->StopForegroundTask();
+}
 
 // Initializes all functions for module CBOT.
 
@@ -3465,6 +3469,7 @@ void CScriptFunctions::Init()
         CBotProgram::DefineNum(TraceColorName(color).c_str(), static_cast<int>(color));
     }
 
+    CBotProgram::SetCancelExternal(Cancel);
     CBotProgram::DefineNum("InFront",    TMA_FFRONT);
     CBotProgram::DefineNum("Behind",     TMA_FBACK);
     CBotProgram::DefineNum("EnergyCell", TMA_POWER);
